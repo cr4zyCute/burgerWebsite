@@ -203,6 +203,14 @@ export interface CmsSection<T = any> {
   content: T;
 }
 
+export interface HeroSlide {
+  id: string;
+  imageUrl: string;
+  imageAlt: string;
+  badge?: string;
+  label?: string;
+}
+
 export interface HeroContent {
   badge: string;
   headline: string;
@@ -220,6 +228,7 @@ export interface HeroContent {
   bgStyle?: 'dark-grill' | 'warm-craft' | 'artisan-grid' | 'clean';
   bgImageUrl?: string;
   bgOverlayOpacity?: number;
+  slides?: HeroSlide[];
 }
 
 export interface PromoFeatureContent {

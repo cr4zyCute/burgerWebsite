@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, Flame, Star, Sparkles, Award } from 'lucide-react';
 import { CmsSection, HeroContent } from '../../types';
+import { HeroPaperStack } from './HeroPaperStack';
 
 interface HeroSectionProps {
   section: CmsSection<HeroContent>;
@@ -31,6 +32,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       section.content?.imageUrl ||
       'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=85',
     imageAlt: section.content?.imageAlt || 'The Double Smash King with melted cheese on toasted brioche',
+    slides: section.content?.slides,
     backgroundColor: section.content?.backgroundColor || '#121212',
     textColor: section.content?.textColor || '#FAF8F3',
     statsValue: section.content?.statsValue || '4.9 ★',
@@ -243,37 +245,16 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </motion.div>
           </div>
 
-          {/* Image Column (5 cols) */}
+          {/* Image Column (5 cols) - Interactive Paper-Swap Burger Deck */}
           <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
-            {/* Ambient Radial Backlight Flare behind Burger */}
-            <div className="absolute -inset-6 bg-[#E9B949]/25 blur-3xl rounded-full -z-10 pointer-events-none" />
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-              className={`relative w-full max-w-md lg:max-w-none bg-[#171717] border-4 border-[#E9B949] shadow-[8px_8px_0px_0px_#A82D24] sm:shadow-[12px_12px_0px_0px_#A82D24] overflow-hidden group ${getEditableClass(
-                'image'
-              )}`}
-              onClick={() => isEditable && onSelectElement?.('image')}
-            >
-              <img
-                src={content.imageUrl}
-                alt={content.imageAlt}
-                className="w-full h-auto object-cover aspect-[4/3] sm:aspect-[1/1] max-h-[460px] block group-hover:scale-105 transition-transform duration-500"
-              />
-
-              {/* Floating Quality Stamp Top Right */}
-              <div className="absolute top-3 right-3 bg-[#E9B949] text-[#171717] px-2.5 py-1 font-display font-black text-[10px] uppercase tracking-wider border-2 border-[#171717] shadow-[2px_2px_0px_0px_#171717] rotate-3">
-                🔥 450° Cast Iron Sizzle
-              </div>
-
-              {/* Solid Corner Tag Bottom Left */}
-              <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 bg-[#171717] text-[#FAF8F3] px-3 py-1.5 font-display font-bold text-[11px] sm:text-xs uppercase tracking-wider border border-[#E9B949] flex items-center gap-1.5 shadow-[2px_2px_0px_0px_#171717]">
-                <Award className="w-3.5 h-3.5 text-[#E9B949]" />
-                <span>100% Certified Angus Beef</span>
-              </div>
-            </motion.div>
+            <HeroPaperStack
+              slides={content.slides}
+              fallbackImageUrl={content.imageUrl}
+              fallbackImageAlt={content.imageAlt}
+              isEditable={isEditable}
+              onSelectElement={onSelectElement}
+              selectedField={selectedField}
+            />
           </div>
         </div>
       </div>
