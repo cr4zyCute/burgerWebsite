@@ -112,7 +112,7 @@ export const HeroPaperStack: React.FC<HeroPaperStackProps> = ({
 
   return (
     <div
-      className={`relative w-full max-w-md lg:max-w-none select-none ${
+      className={`relative w-full max-w-sm sm:max-w-md lg:max-w-none mx-auto lg:mx-0 select-none ${
         isEditable
           ? `cursor-pointer transition-all ${
               isSelected
@@ -129,7 +129,7 @@ export const HeroPaperStack: React.FC<HeroPaperStackProps> = ({
       <div className="absolute -inset-6 bg-[#E9B949]/25 blur-3xl rounded-full -z-20 pointer-events-none" />
 
       {/* STACK CONTAINER */}
-      <div className="relative aspect-[4/3] sm:aspect-[1/1] max-h-[460px] w-full">
+      <div className="relative aspect-[4/3] sm:aspect-square max-h-[300px] sm:max-h-[380px] lg:max-h-[460px] w-full">
         {/* 3. Third Card in background (bottom of paper stack) */}
         {activeSlides.length > 2 && (
           <div

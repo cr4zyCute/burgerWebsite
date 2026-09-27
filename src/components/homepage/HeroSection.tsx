@@ -135,42 +135,45 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
       {/* 2. FOREGROUND CONTENT */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-          {/* Text Column (7 cols) */}
-          <div className="lg:col-span-7 space-y-4 sm:space-y-5 lg:space-y-6">
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-              className={`inline-flex items-center gap-2 px-3 py-1 bg-[#E9B949] text-[#171717] font-display font-extrabold uppercase text-xs md:text-sm tracking-[0.2em] border-2 border-[#171717] shadow-[2px_2px_0px_0px_#171717] ${getEditableClass(
-                'badge'
-              )}`}
-              onClick={() => isEditable && onSelectElement?.('badge')}
-            >
-              <Flame className="w-4 h-4 text-[#A82D24] stroke-[2.5]" />
-              <span>{content.badge}</span>
-            </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-5 sm:gap-y-6 lg:gap-12 items-center">
+          {/* Text Column (Desktop: 7 cols left block; Mobile: contents for seamless visual ordering) */}
+          <div className="contents lg:block lg:col-span-7 lg:space-y-6">
+            {/* 1. Header Group: Badge & Headline (order-1 on mobile) */}
+            <div className="order-1 lg:order-none space-y-2.5 sm:space-y-3 lg:space-y-4">
+              {/* Badge */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: 'easeOut' }}
+                className={`inline-flex items-center gap-2 px-3 py-1 bg-[#E9B949] text-[#171717] font-display font-extrabold uppercase text-xs md:text-sm tracking-[0.2em] border-2 border-[#171717] shadow-[2px_2px_0px_0px_#171717] ${getEditableClass(
+                  'badge'
+                )}`}
+                onClick={() => isEditable && onSelectElement?.('badge')}
+              >
+                <Flame className="w-4 h-4 text-[#A82D24] stroke-[2.5]" />
+                <span>{content.badge}</span>
+              </motion.div>
 
-            {/* Headline */}
-            <motion.h1
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className={`text-fluid-hero font-black font-display uppercase tracking-tight ${
-                isDarkTheme ? 'text-[#FAF8F3]' : 'text-[#171717]'
-              } ${getEditableClass('headline')}`}
-              onClick={() => isEditable && onSelectElement?.('headline')}
-            >
-              {renderStyledHeadline(content.headline)}
-            </motion.h1>
+              {/* Headline */}
+              <motion.h1
+                initial={{ opacity: 0, y: 22 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+                className={`text-[2.15rem] sm:text-4xl md:text-5xl lg:text-fluid-hero leading-[0.95] lg:leading-[0.92] font-black font-display uppercase tracking-tight ${
+                  isDarkTheme ? 'text-[#FAF8F3]' : 'text-[#171717]'
+                } ${getEditableClass('headline')}`}
+                onClick={() => isEditable && onSelectElement?.('headline')}
+              >
+                {renderStyledHeadline(content.headline)}
+              </motion.h1>
+            </div>
 
-            {/* Persuasive Description */}
+            {/* 3. Description (order-3 on mobile, directly underneath the Burger Stack) */}
             <motion.p
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45, delay: 0.16, ease: 'easeOut' }}
-              className={`text-base sm:text-lg md:text-xl font-body max-w-xl leading-relaxed ${
+              className={`order-3 lg:order-none text-sm sm:text-base md:text-lg lg:text-xl font-body max-w-xl leading-relaxed ${
                 isDarkTheme ? 'text-[#E5DFD3]/90' : 'text-[#77736E]'
               } ${getEditableClass('description')}`}
               onClick={() => isEditable && onSelectElement?.('description')}
@@ -178,12 +181,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               {content.description}
             </motion.p>
 
-            {/* CTA Group */}
+            {/* 4. CTA Group (order-4 on mobile) */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.24, ease: 'easeOut' }}
-              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1"
+              className="order-4 lg:order-none flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1"
             >
               <div
                 className={`w-full sm:w-auto ${getEditableClass('primaryCta')}`}
@@ -191,7 +194,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               >
                 <Link
                   to={content.primaryCtaLink}
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#A82D24] hover:bg-[#8C231B] text-white font-display font-black uppercase text-base sm:text-lg md:text-xl px-6 sm:px-8 py-3.5 sm:py-4 border-2 border-white sm:border-white shadow-[4px_4px_0px_0px_#E9B949] hover:shadow-[2px_2px_0px_0px_#E9B949] hover:translate-x-[1px] hover:translate-y-[1px] transition-all min-h-[44px]"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#A82D24] hover:bg-[#8C231B] text-white font-display font-black uppercase text-base sm:text-lg md:text-xl px-6 sm:px-8 py-3.5 sm:py-4 border-2 border-white shadow-[4px_4px_0px_0px_#E9B949] hover:shadow-[2px_2px_0px_0px_#E9B949] hover:translate-x-[1px] hover:translate-y-[1px] transition-all min-h-[48px]"
                 >
                   <span>{content.primaryCtaText}</span>
                   <ArrowRight className="w-5 h-5" />
@@ -204,7 +207,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               >
                 <Link
                   to={content.secondaryCtaLink}
-                  className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 font-display font-black uppercase text-base sm:text-lg md:text-xl px-6 sm:px-7 py-3.5 sm:py-4 border-2 transition-all min-h-[44px] ${
+                  className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 font-display font-black uppercase text-base sm:text-lg md:text-xl px-6 sm:px-7 py-3.5 sm:py-4 border-2 transition-all min-h-[48px] ${
                     isDarkTheme
                       ? 'bg-white/10 hover:bg-[#FAF8F3] hover:text-[#171717] text-white border-white backdrop-blur-sm shadow-[4px_4px_0px_0px_rgba(255,255,255,0.2)]'
                       : 'bg-transparent hover:bg-[#171717] hover:text-white text-[#171717] border-[#171717]'
@@ -215,12 +218,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </div>
             </motion.div>
 
-            {/* Social Proof / Stats Strip */}
+            {/* 5. Social Proof / Stats Strip (order-5 on mobile) */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.32, ease: 'easeOut' }}
-              className={`flex items-center gap-3 pt-2 sm:pt-3 max-w-md ${getEditableClass(
+              className={`order-5 lg:order-none flex items-center gap-3 pt-1 sm:pt-2 max-w-md ${getEditableClass(
                 'stats'
               )}`}
               onClick={() => isEditable && onSelectElement?.('stats')}
@@ -245,8 +248,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </motion.div>
           </div>
 
-          {/* Image Column (5 cols) - Interactive Paper-Swap Burger Deck */}
-          <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
+          {/* 2. Image Column - Interactive Paper-Swap Burger Deck (order-2 on mobile, 5 cols right on desktop) */}
+          <div className="order-2 lg:order-none lg:col-span-5 relative flex justify-center lg:justify-end w-full py-1 sm:py-2 lg:py-0">
             <HeroPaperStack
               slides={content.slides}
               fallbackImageUrl={content.imageUrl}
