@@ -1,0 +1,183 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowRight, Flame, Star } from 'lucide-react';
+import { CmsSection, HeroContent } from '../../types';
+
+interface HeroSectionProps {
+  section: CmsSection<HeroContent>;
+  isEditable?: boolean;
+  onSelectElement?: (field: string) => void;
+  selectedField?: string | null;
+}
+
+export const HeroSection: React.FC<HeroSectionProps> = ({
+  section,
+  isEditable = false,
+  onSelectElement,
+  selectedField,
+}) => {
+  const content: HeroContent = {
+    badge: section.content?.badge || 'CRAFTED FRESH DAILY',
+    headline: section.content?.headline || 'REAL DRY-AGED SMASH BURGERS.',
+    description:
+      section.content?.description ||
+      'Hand-pressed on 450° cast iron for that legendary crispy lace crust. Made with 100% grass-fed Angus beef, house-baked brioche, and secret craft sauce.',
+    primaryCtaText: section.content?.primaryCtaText || 'Order Online Now',
+    primaryCtaLink: section.content?.primaryCtaLink || '/menu',
+    secondaryCtaText: section.content?.secondaryCtaText || 'Build Your Own Burger',
+    secondaryCtaLink: section.content?.secondaryCtaLink || '/build-your-burger',
+    imageUrl:
+      section.content?.imageUrl ||
+      'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=85',
+    imageAlt: section.content?.imageAlt || 'The Double Smash King with melted cheese on toasted brioche',
+    backgroundColor: section.content?.backgroundColor || '#FAF8F3',
+    textColor: section.content?.textColor || '#171717',
+    statsValue: section.content?.statsValue || '4.9 ★',
+    statsLabel: section.content?.statsLabel || 'Over 2,400 Verified Reviews',
+  };
+
+  const getEditableClass = (field: string) => {
+    if (!isEditable) return '';
+    const isSelected = selectedField === field;
+    return `cursor-pointer transition-all duration-150 ${
+      isSelected
+        ? 'outline-2 outline-[#A82D24] outline-dashed bg-[#A82D24]/10'
+        : 'hover:outline-1 hover:outline-[#171717] hover:outline-dashed'
+    }`;
+  };
+
+  return (
+    <section
+      className="relative overflow-hidden border-b-4 border-[#171717] min-h-[calc(100dvh-5rem)] flex items-center py-8 sm:py-12 lg:py-14"
+      style={{ backgroundColor: content.backgroundColor, color: content.textColor }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          {/* Text Column (7 cols) */}
+          <div className="lg:col-span-7 space-y-4 sm:space-y-5 lg:space-y-6">
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+              className={`inline-flex items-center gap-2 px-3 py-1 bg-[#E9B949] text-[#171717] font-display font-extrabold uppercase text-xs md:text-sm tracking-[0.2em] border border-[#171717] ${getEditableClass(
+                'badge'
+              )}`}
+              onClick={() => isEditable && onSelectElement?.('badge')}
+            >
+              <Flame className="w-4 h-4 text-[#A82D24] stroke-[2.5]" />
+              <span>{content.badge}</span>
+            </motion.div>
+
+            {/* Headline */}
+            <motion.h1
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className={`text-fluid-hero font-black font-display uppercase tracking-tight text-[#171717] ${getEditableClass(
+                'headline'
+              )}`}
+              onClick={() => isEditable && onSelectElement?.('headline')}
+            >
+              {content.headline}
+            </motion.h1>
+
+            {/* Persuasive Description */}
+            <motion.p
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.16, ease: 'easeOut' }}
+              className={`text-base sm:text-lg md:text-xl font-body text-[#77736E] max-w-xl leading-relaxed ${getEditableClass(
+                'description'
+              )}`}
+              onClick={() => isEditable && onSelectElement?.('description')}
+            >
+              {content.description}
+            </motion.p>
+
+            {/* CTA Group */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.24, ease: 'easeOut' }}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1"
+            >
+              <div
+                className={`w-full sm:w-auto ${getEditableClass('primaryCta')}`}
+                onClick={() => isEditable && onSelectElement?.('primaryCta')}
+              >
+                <Link
+                  to={content.primaryCtaLink}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#A82D24] hover:bg-[#8C231B] text-white font-display font-black uppercase text-base sm:text-lg md:text-xl px-6 sm:px-8 py-3.5 sm:py-4 border-2 border-[#171717] shadow-[4px_4px_0px_0px_#171717] hover:shadow-[2px_2px_0px_0px_#171717] hover:translate-x-[1px] hover:translate-y-[1px] transition-all min-h-[44px]"
+                >
+                  <span>{content.primaryCtaText}</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </div>
+
+              <div
+                className={`w-full sm:w-auto ${getEditableClass('secondaryCta')}`}
+                onClick={() => isEditable && onSelectElement?.('secondaryCta')}
+              >
+                <Link
+                  to={content.secondaryCtaLink}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-transparent hover:bg-[#171717] hover:text-white text-[#171717] font-display font-black uppercase text-base sm:text-lg md:text-xl px-6 sm:px-7 py-3.5 sm:py-4 border-2 border-[#171717] transition-all min-h-[44px]"
+                >
+                  <span>{content.secondaryCtaText}</span>
+                </Link>
+              </div>
+            </motion.div>
+
+            {/* Social Proof / Stats Strip */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.32, ease: 'easeOut' }}
+              className={`flex items-center gap-3 pt-2 sm:pt-3 max-w-md ${getEditableClass(
+                'stats'
+              )}`}
+              onClick={() => isEditable && onSelectElement?.('stats')}
+            >
+              <div className="flex items-center gap-1 text-[#E9B949]">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-current text-[#E9B949]" />
+                ))}
+              </div>
+              <div className="text-xs md:text-sm font-body text-[#171717]">
+                <strong className="font-display font-black text-base mr-1">
+                  {content.statsValue}
+                </strong>
+                <span className="text-[#77736E]">{content.statsLabel}</span>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Image Column (5 cols) */}
+          <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className={`relative w-full max-w-md lg:max-w-none bg-[#F5F0E6] border-2 sm:border-4 border-[#171717] shadow-[6px_6px_0px_0px_#171717] sm:shadow-[10px_10px_0px_0px_#171717] overflow-hidden ${getEditableClass(
+                'image'
+              )}`}
+              onClick={() => isEditable && onSelectElement?.('image')}
+            >
+              <img
+                src={content.imageUrl}
+                alt={content.imageAlt}
+                className="w-full h-auto object-cover aspect-[4/3] sm:aspect-[1/1] max-h-[460px] block hover:scale-103 transition-transform duration-500"
+              />
+
+              {/* Solid Corner Tag */}
+              <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 bg-[#171717] text-[#FAF8F3] px-2.5 sm:px-3 py-1 sm:py-1.5 font-display font-bold text-[11px] sm:text-xs uppercase tracking-wider border border-[#FAF8F3]">
+                100% Certified Angus Beef
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};

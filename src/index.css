@@ -1,0 +1,217 @@
+@import "tailwindcss";
+
+@theme {
+  --color-charcoal: #171717;
+  --color-cream: #F5F0E6;
+  --color-offwhite: #FAF8F3;
+  --color-deepred: #A82D24;
+  --color-mustard: #E9B949;
+  --color-brown: #70452D;
+  --color-mutedgray: #77736E;
+  --color-bordercream: #E5DFD3;
+
+  --font-display: "Barlow Condensed", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-editorial: "Fraunces", serif;
+}
+
+@layer base {
+  * {
+    border-color: #E5DFD3;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: #FAF8F3;
+    color: #171717;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+
+  /* Responsive image baseline */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display), "Barlow Condensed", sans-serif !important;
+  }
+  .font-body {
+    font-family: var(--font-body), "DM Sans", sans-serif !important;
+  }
+  .font-editorial {
+    font-family: var(--font-editorial), "Fraunces", serif !important;
+  }
+
+  /* Safe-area insets for modern mobile viewports & notches */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .pl-safe {
+    padding-left: env(safe-area-inset-left, 0px);
+  }
+  .pr-safe {
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  /* WCAG 2.2 AA Touch target compliance (minimum 44x44px hit-box) */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Dynamic viewport height utilities */
+  .h-dvh {
+    height: 100dvh;
+  }
+  .min-h-dvh {
+    min-height: 100dvh;
+  }
+  .max-h-dvh {
+    max-height: 100dvh;
+  }
+
+  /* Fluid typography clamp utilities */
+  .text-fluid-hero {
+    font-size: clamp(2.5rem, 6.5vw + 0.5rem, 5.5rem);
+    line-height: 0.92;
+  }
+  .text-fluid-section {
+    font-size: clamp(2rem, 4.5vw + 0.5rem, 3.75rem);
+    line-height: 0.95;
+  }
+  .text-fluid-card {
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    line-height: 1.1;
+  }
+
+  /* Container query utility classes */
+  .container-inline {
+    container-type: inline-size;
+  }
+}
+
+/* Custom crisp scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F5F0E6;
+}
+::-webkit-scrollbar-thumb {
+  background: #77736E;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #171717;
+}
+
+/* Accessible focus rings */
+:focus-visible {
+  outline: 2px solid #A82D24;
+  outline-offset: 2px;
+}
+
+/* Solid badge & buttons with touch safety */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  background-color: #A82D24;
+  color: #FFFFFF;
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.75rem;
+  border-radius: 0px;
+  border: 1px solid #A82D24;
+  transition: all 180ms ease;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background-color: #8C231B;
+  border-color: #8C231B;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  background-color: transparent;
+  color: #171717;
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.75rem;
+  border-radius: 0px;
+  border: 1px solid #171717;
+  transition: all 180ms ease;
+  cursor: pointer;
+}
+.btn-secondary:hover {
+  background-color: #171717;
+  color: #FFFFFF;
+}
+
+.btn-mustard {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  background-color: #E9B949;
+  color: #171717;
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1.75rem;
+  border-radius: 0px;
+  border: 1px solid #E9B949;
+  transition: all 180ms ease;
+  cursor: pointer;
+}
+.btn-mustard:hover {
+  background-color: #D3A43B;
+  border-color: #D3A43B;
+}
+
+/* Motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
