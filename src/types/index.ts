@@ -217,6 +217,9 @@ export interface HeroContent {
   textColor: string;
   statsValue: string;
   statsLabel: string;
+  bgStyle?: 'dark-grill' | 'warm-craft' | 'artisan-grid' | 'clean';
+  bgImageUrl?: string;
+  bgOverlayOpacity?: number;
 }
 
 export interface PromoFeatureContent {

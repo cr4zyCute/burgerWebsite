@@ -68,6 +68,76 @@ export const SectionInspector: React.FC<SectionInspectorProps> = ({ section }) =
         {/* HERO INSPECTOR */}
         {section.type === 'hero' && (
           <>
+            {/* Hero Background Atmosphere Selector */}
+            <div className="bg-[#F5F0E6] p-3 border border-[#E5DFD3] space-y-2.5">
+              <label className="block text-xs font-black uppercase font-display text-[#171717] flex items-center justify-between">
+                <span>Hero Background Atmosphere</span>
+                <span className="text-[10px] text-[#A82D24] font-mono">Theme fit</span>
+              </label>
+
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleChange('bgStyle', 'dark-grill');
+                    handleChange('bgImageUrl', '/images/hero-restaurant-bg.jpg');
+                  }}
+                  className={`p-2 border text-left flex flex-col gap-1 transition-all cursor-pointer ${
+                    (content.bgStyle || 'dark-grill') === 'dark-grill'
+                      ? 'border-[#A82D24] bg-white ring-2 ring-[#A82D24]'
+                      : 'border-[#CCCCCC] bg-white/70 hover:border-[#171717]'
+                  }`}
+                >
+                  <span className="text-xs font-display font-black uppercase text-[#171717]">
+                    🔥 Dark Grillhouse
+                  </span>
+                  <span className="text-[10px] text-[#77736E] font-body line-clamp-1">
+                    Warm Edison glow &amp; smoke
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleChange('bgStyle', 'warm-craft');
+                    handleChange('bgImageUrl', '/images/hero-craft-parchment.jpg');
+                  }}
+                  className={`p-2 border text-left flex flex-col gap-1 transition-all cursor-pointer ${
+                    content.bgStyle === 'warm-craft'
+                      ? 'border-[#A82D24] bg-white ring-2 ring-[#A82D24]'
+                      : 'border-[#CCCCCC] bg-white/70 hover:border-[#171717]'
+                  }`}
+                >
+                  <span className="text-xs font-display font-black uppercase text-[#171717]">
+                    📜 Warm Parchment
+                  </span>
+                  <span className="text-[10px] text-[#77736E] font-body line-clamp-1">
+                    Craft paper &amp; grill texture
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleChange('bgStyle', 'artisan-grid');
+                    handleChange('bgImageUrl', '');
+                  }}
+                  className={`p-2 border text-left flex flex-col gap-1 transition-all cursor-pointer col-span-2 ${
+                    content.bgStyle === 'artisan-grid'
+                      ? 'border-[#A82D24] bg-white ring-2 ring-[#A82D24]'
+                      : 'border-[#CCCCCC] bg-white/70 hover:border-[#171717]'
+                  }`}
+                >
+                  <span className="text-xs font-display font-black uppercase text-[#171717]">
+                    📐 Architectural Dot Grid
+                  </span>
+                  <span className="text-[10px] text-[#77736E] font-body">
+                    Light cream base with subtle craft matrix and amber flare
+                  </span>
+                </button>
+              </div>
+            </div>
+
             <div>
               <label className="block text-xs font-bold uppercase font-display text-[#171717] mb-1">
                 Badge Tagline
