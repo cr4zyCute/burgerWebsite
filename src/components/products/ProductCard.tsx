@@ -44,15 +44,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
       >
         {/* Image Container with Badges */}
         <div className="relative aspect-[4/3] overflow-hidden bg-[#F5F0E6] border-b-2 border-[#171717]">
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-            loading="lazy"
-          />
+          <Link
+            to={`/menu/${product.slug}`}
+            className="block w-full h-full cursor-pointer focus:outline-none"
+            aria-label={`View ${product.name}`}
+          >
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              loading="lazy"
+            />
+          </Link>
 
           {/* Badges on top left */}
-          <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 items-start z-10">
+          <div className="absolute top-2.5 left-2.5 flex flex-col gap-1 items-start z-10 pointer-events-none">
             {product.isBestSeller && (
               <Badge variant="mustard" size="sm">
                 Best Seller
@@ -77,8 +83,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
 
           {/* Quick View Button on top right with 44x44px touch target */}
           <button
-            onClick={() => setIsQuickViewOpen(true)}
-            className="touch-target absolute top-2 right-2 w-11 h-11 bg-[#FAF8F3] hover:bg-[#171717] hover:text-white border border-[#171717] flex items-center justify-center text-[#171717] transition-colors opacity-95 hover:opacity-100 cursor-pointer shadow-sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              setIsQuickViewOpen(true);
+            }}
+            className="touch-target absolute top-2 right-2 w-11 h-11 bg-[#FAF8F3] hover:bg-[#171717] hover:text-white border border-[#171717] flex items-center justify-center text-[#171717] transition-colors opacity-95 hover:opacity-100 cursor-pointer shadow-sm z-20"
             aria-label={`Quick view ${product.name}`}
           >
             <Eye className="w-4 h-4" />

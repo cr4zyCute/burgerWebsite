@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Star, AlertCircle, Check, ShieldCheck, Flame } from 'lucide-react';
 import { AnnouncementBar } from '../../components/layout/AnnouncementBar';
@@ -25,6 +25,17 @@ export const ProductDetailPage: React.FC = () => {
   const [selectedModifiers, setSelectedModifiers] = useState<SelectedModifier[]>([]);
   const [specialInstructions, setSpecialInstructions] = useState('');
   const [added, setAdded] = useState(false);
+
+  // Scroll to top and reset product options whenever route slug changes
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (product) {
+      setSelectedImage(product.imageUrl);
+      setQuantity(1);
+      setSelectedModifiers([]);
+      setSpecialInstructions('');
+    }
+  }, [slug, product?.id]);
 
   // If not found, show 404 block
   if (!product) {

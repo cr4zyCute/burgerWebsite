@@ -31,10 +31,12 @@ import { AdminReviewsPage } from './pages/admin/AdminReviewsPage';
 import { AdminCustomersPage } from './pages/admin/AdminCustomersPage';
 import { AdminSettingsPage } from './pages/admin/AdminSettingsPage';
 import { AdminAuditLogsPage } from './pages/admin/AdminAuditLogsPage';
+import { ScrollToTop } from './components/common/ScrollToTop';
 
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         {/* Customer Public Routes */}
         <Route path="/" element={<HomePage />} />
