@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Award, Sparkles, Layers, RotateCcw } from 'lucide-react';
+import { Award } from 'lucide-react';
 import { HeroSlide } from '../../types';
 
 interface HeroPaperStackProps {
@@ -88,6 +88,18 @@ export const HeroPaperStack: React.FC<HeroPaperStackProps> = ({
     setDirection('prev');
     setCurrentIndex((prev) => (prev - 1 + activeSlides.length) % activeSlides.length);
   };
+
+  // 3-Second Automatic Paper Swap
+  useEffect(() => {
+    if (activeSlides.length <= 1 || isEditable) return;
+
+    const timer = setInterval(() => {
+      setDirection('next');
+      setCurrentIndex((prev) => (prev + 1) % activeSlides.length);
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [activeSlides.length, isEditable, currentIndex]);
 
   // Stack paper rotation angles for tactile physical paper feel
   const rotations = [-2.5, 2, -1.5, 2.5];
@@ -225,67 +237,6 @@ export const HeroPaperStack: React.FC<HeroPaperStackProps> = ({
             </div>
           </motion.div>
         </AnimatePresence>
-      </div>
-
-      {/* SWAP CONTROLS & PAGINATION BAR */}
-      <div className="mt-4 flex items-center justify-between gap-2 px-1">
-        {/* Pagination Dots & Paper Stack counter */}
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 bg-[#171717] px-2.5 py-1 border border-[#E9B949]/50 shadow-[2px_2px_0px_0px_#171717]">
-            <Layers className="w-3 h-3 text-[#E9B949]" />
-            <span className="font-display font-black text-[11px] uppercase tracking-wider text-white">
-              Menu Card {currentIndex + 1} / {activeSlides.length}
-            </span>
-          </div>
-
-          <div className="flex items-center gap-1">
-            {activeSlides.map((s, idx) => (
-              <button
-                key={s.id + idx}
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setDirection(idx > currentIndex ? 'next' : 'prev');
-                  setCurrentIndex(idx);
-                }}
-                className={`w-2.5 h-2.5 rounded-full transition-all cursor-pointer ${
-                  idx === currentIndex
-                    ? 'bg-[#E9B949] w-6 border border-[#171717]'
-                    : 'bg-white/40 hover:bg-white'
-                }`}
-                aria-label={`Go to slide ${idx + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Previous / Next Arrow Flippers */}
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              handlePrev();
-            }}
-            className="p-2 bg-[#171717] text-white hover:bg-[#A82D24] border border-[#E5DFD3]/40 shadow-[2px_2px_0px_0px_#171717] transition-all active:translate-y-0.5 cursor-pointer rounded-[2px]"
-            title="Previous Burger Card"
-            aria-label="Previous Burger Card"
-          >
-            <ChevronLeft className="w-4 h-4 stroke-[3]" />
-          </button>
-          <button
-            type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              handleNext();
-            }}
-            className="p-2 bg-[#A82D24] text-white hover:bg-[#8C231B] border border-[#FAF8F3] shadow-[2px_2px_0px_0px_#171717] transition-all active:translate-y-0.5 cursor-pointer rounded-[2px]"
-            title="Next Burger Card (Swap)"
-            aria-label="Next Burger Card (Swap)"
-          >
-            <ChevronRight className="w-4 h-4 stroke-[3]" />
-          </button>
-        </div>
       </div>
     </div>
   );
