@@ -40,7 +40,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
         layout
         whileHover={{ y: -4, boxShadow: '6px 6px 0px 0px #171717' }}
         transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className={`group bg-[#FFFFFF] border-2 border-[#171717] flex flex-col justify-between container-inline ${className || ''}`}
+        className={`group bg-[#FFFFFF] border-2 border-[#171717] flex flex-col justify-between container-inline h-full ${className || ''}`}
       >
         {/* Image Container with Badges */}
         <div className="relative aspect-[4/3] overflow-hidden bg-[#F5F0E6] border-b-2 border-[#171717]">
@@ -98,16 +98,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
         {/* Content Area */}
         <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
           <div>
-            <div className="flex items-baseline justify-between gap-2 mb-1.5">
+            <div className="flex items-baseline justify-between gap-2 mb-1.5 min-h-[3.25rem] sm:min-h-[3.5rem]">
               <Link
                 to={`/menu/${product.slug}`}
-                className="font-display font-black text-xl md:text-2xl uppercase tracking-tight text-[#171717] hover:text-[#A82D24] transition-colors leading-tight"
+                className="font-display font-black text-xl md:text-2xl uppercase tracking-tight text-[#171717] hover:text-[#A82D24] transition-colors leading-tight line-clamp-2"
               >
                 {product.name}
               </Link>
             </div>
 
-            <p className="text-xs md:text-sm text-[#77736E] font-body line-clamp-2 leading-relaxed mb-4">
+            <p className="text-xs md:text-sm text-[#77736E] font-body line-clamp-2 leading-relaxed min-h-[2.5rem] mb-4">
               {product.description}
             </p>
           </div>

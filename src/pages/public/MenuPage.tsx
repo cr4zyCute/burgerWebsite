@@ -210,8 +210,9 @@ export const MenuPage: React.FC = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.96 }}
                       transition={{ duration: 0.22, ease: 'easeOut' }}
+                      className="h-full flex flex-col"
                     >
-                      <ProductCard product={product} />
+                      <ProductCard product={product} className="h-full" />
                     </motion.div>
                   ))}
                 </AnimatePresence>
