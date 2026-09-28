@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, User, Search, Menu as MenuIcon, X, Shield } from 'lucide-react';
+import { ShoppingBag, User, Search, Menu as MenuIcon, X } from 'lucide-react';
 import { useCartStore } from '../../stores/useCartStore';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { cn } from '../../lib/utils';
@@ -83,16 +83,6 @@ export const Navbar: React.FC = () => {
 
         {/* Right: Actions */}
         <div className="flex items-center gap-2 sm:gap-3">
-          {/* Admin link badge */}
-          <Link
-            to="/admin"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-black uppercase font-display tracking-wider bg-[#171717] text-[#E9B949] hover:bg-[#A82D24] hover:text-white transition-colors border border-[#171717]"
-            title="Admin Dashboard & Visual CMS"
-          >
-            <Shield className="w-3.5 h-3.5" />
-            <span>Admin CMS</span>
-          </Link>
-
           {/* Search link */}
           <Link
             to="/menu"
@@ -173,13 +163,6 @@ export const Navbar: React.FC = () => {
                   {link.label}
                 </Link>
               ))}
-              <Link
-                to="/admin"
-                className="flex items-center gap-2 font-display font-black text-lg uppercase tracking-wider text-[#A82D24] py-3 min-h-[44px] transition-colors"
-              >
-                <Shield className="w-5 h-5" />
-                <span>Admin Dashboard &amp; Visual CMS</span>
-              </Link>
             </nav>
             <div className="pt-2">
               <Link
