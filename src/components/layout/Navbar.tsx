@@ -30,6 +30,7 @@ export const Navbar: React.FC = () => {
   }, [location.pathname]);
 
   const navLinks = [
+    { label: 'Home', href: '/' },
     { label: 'Menu', href: '/menu' },
     { label: 'Deals', href: '/deals' },
     { label: 'Build Burger', href: '/build-your-burger' },
@@ -54,7 +55,7 @@ export const Navbar: React.FC = () => {
           </Link>
 
         {/* Center: Desktop Navigation with hover transitions */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
           {navLinks.map((link) => {
             const isActive = location.pathname === link.href;
             return (
