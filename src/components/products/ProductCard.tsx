@@ -88,7 +88,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
               e.preventDefault();
               setIsQuickViewOpen(true);
             }}
-            className="touch-target absolute top-2 right-2 w-11 h-11 bg-[#FAF8F3] hover:bg-[#171717] hover:text-white border border-[#171717] flex items-center justify-center text-[#171717] transition-colors opacity-95 hover:opacity-100 cursor-pointer shadow-sm z-20"
+            className="touch-target absolute top-2 right-2 w-11 h-11 bg-[#FAF8F3] hover:bg-[#171717] hover:text-white border border-[#171717] flex items-center justify-center text-[#171717] transition-colors opacity-95 hover:opacity-100 cursor-pointer shadow-sm z-10"
             aria-label={`Quick view ${product.name}`}
           >
             <Eye className="w-4 h-4" />

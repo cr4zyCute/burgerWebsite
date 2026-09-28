@@ -88,7 +88,7 @@ export const MenuPage: React.FC = () => {
       </section>
 
       {/* Sticky Filter Bar */}
-      <div className="sticky top-20 z-20 bg-[#FAF8F3] border-b-2 border-[#171717] py-3 sm:py-4 shadow-sm">
+      <div className="sticky top-20 z-30 bg-[#FAF8F3] border-b-2 border-[#171717] py-3 sm:py-4 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-3 sm:space-y-4">
           {/* Category Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0">
@@ -166,7 +166,7 @@ export const MenuPage: React.FC = () => {
       </div>
 
       {/* Products Grid */}
-      <main className="flex-1 py-12">
+      <main className="relative z-0 flex-1 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {filteredProducts.length === 0 ? (
             <div className="text-center py-20 bg-white border-2 border-[#171717] p-8 max-w-lg mx-auto">

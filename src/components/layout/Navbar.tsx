@@ -42,7 +42,7 @@ export const Navbar: React.FC = () => {
   return (
     <header
         className={cn(
-          'sticky top-0 z-30 w-full transition-all duration-200 border-b',
+          'sticky top-0 z-40 w-full transition-all duration-200 border-b',
           isScrolled
             ? 'bg-[#FAF8F3] border-[#171717] shadow-[0_2px_0_0_#171717]'
             : 'bg-[#FAF8F3]/95 backdrop-blur-none border-[#E5DFD3]'
