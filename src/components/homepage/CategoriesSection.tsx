@@ -39,7 +39,7 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
       id: 'sides',
       name: 'Hand-Cut Sides',
       count: '5 Items',
-      imageUrl: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=600&q=80',
+      imageUrl: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80',
       description: 'Double-fried Idaho russet truffle fries & beer-battered rings.',
     },
     {
@@ -90,6 +90,12 @@ export const CategoriesSection: React.FC<CategoriesSectionProps> = ({
                 <img
                   src={cat.imageUrl}
                   alt={cat.name}
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.src.includes('photo-1573080496219-bb080dd4f877')) {
+                      target.src = 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80';
+                    }
+                  }}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
                 <span className="absolute top-3 right-3 bg-[#171717] text-white font-display font-bold text-xs uppercase px-2.5 py-1 tracking-wider border border-white">

@@ -18,14 +18,21 @@ export const SocialGallerySection: React.FC<SocialGallerySectionProps> = ({
 }) => {
   const tagline = section.content?.tagline || '@BURGERCRAFTNYC';
   const heading = section.content?.heading || 'TAG US IN YOUR CRAFT CREATIONS';
-  const images = section.content?.images || [
+  const fallbackImages = [
     'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80',
     'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?auto=format&fit=crop&w=600&q=80',
     'https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?auto=format&fit=crop&w=600&q=80',
-    'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=600&q=80',
+    'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80',
     'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=600&q=80',
     'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80',
   ];
+
+  const rawImages: string[] = section.content?.images || fallbackImages;
+  const images = rawImages.map((img: string) =>
+    img.includes('1576107232684-1279f3908594')
+      ? 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80'
+      : img
+  );
 
   return (
     <section className="py-20 bg-[#FAF8F3] border-b-2 border-[#171717]">
@@ -48,6 +55,12 @@ export const SocialGallerySection: React.FC<SocialGallerySectionProps> = ({
               <img
                 src={img}
                 alt={`Customer craft burger photo ${index + 1}`}
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (!target.src.includes('photo-1573080496219-bb080dd4f877')) {
+                    target.src = 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80';
+                  }
+                }}
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
               />
               <div className="absolute inset-0 bg-[#171717]/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">

@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { MediaAsset } from '../types';
 import { SEED_MEDIA_ASSETS } from '../db/seed-data';
+import { sanitizeImageUrl } from '../lib/sanitizeImages';
 
 interface MediaState {
   assets: MediaAsset[];
@@ -63,6 +64,14 @@ export const useMediaStore = create<MediaState>()(
     }),
     {
       name: 'burger-craft-media',
+      onRehydrateStorage: () => (state) => {
+        if (state?.assets) {
+          state.assets = state.assets.map((a) => ({
+            ...a,
+            url: sanitizeImageUrl(a.url),
+          }));
+        }
+      },
     }
   )
 );

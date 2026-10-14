@@ -52,6 +52,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, className }) 
             <img
               src={product.imageUrl}
               alt={product.name}
+              onError={(e) => {
+                const target = e.currentTarget;
+                if (!target.src.includes('photo-1568901346375-23c9450c58cd')) {
+                  target.src = 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80';
+                }
+              }}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               loading="lazy"
             />

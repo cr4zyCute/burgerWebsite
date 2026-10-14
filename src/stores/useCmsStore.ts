@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { CmsSection, SectionType } from '../types';
 import { INITIAL_CMS_SECTIONS } from '../db/seed-data';
+import { sanitizeImageUrl } from '../lib/sanitizeImages';
 
 interface CmsState {
   publishedSections: CmsSection[];
@@ -213,6 +214,25 @@ export const useCmsStore = create<CmsState>()(
     }),
     {
       name: 'burger-craft-cms',
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          const sanitizeSection = (sec: CmsSection) => {
+            if (sec.content?.images && Array.isArray(sec.content.images)) {
+              sec.content.images = sec.content.images.map(sanitizeImageUrl);
+            }
+            if (sec.content?.imageUrl) {
+              sec.content.imageUrl = sanitizeImageUrl(sec.content.imageUrl);
+            }
+            return sec;
+          };
+          if (state.publishedSections) {
+            state.publishedSections = state.publishedSections.map(sanitizeSection);
+          }
+          if (state.draftSections) {
+            state.draftSections = state.draftSections.map(sanitizeSection);
+          }
+        }
+      },
     }
   )
 );

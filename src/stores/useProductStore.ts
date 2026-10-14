@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { Product, ProductCategory } from '../types';
 import { SEED_PRODUCTS } from '../db/seed-data';
+import { sanitizeImageUrl } from '../lib/sanitizeImages';
 
 interface ProductState {
   products: Product[];
@@ -91,6 +92,15 @@ export const useProductStore = create<ProductState>()(
     }),
     {
       name: 'burger-craft-products',
+      onRehydrateStorage: () => (state) => {
+        if (state?.products) {
+          state.products = state.products.map((p) => ({
+            ...p,
+            imageUrl: sanitizeImageUrl(p.imageUrl),
+            galleryImages: p.galleryImages?.map(sanitizeImageUrl) || [],
+          }));
+        }
+      },
     }
   )
 );

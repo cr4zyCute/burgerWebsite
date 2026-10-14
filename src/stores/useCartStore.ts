@@ -78,7 +78,7 @@ export const useCartStore = create<CartState>()(
             category: 'sides',
             price: 675,
             description: 'Double-fried Idaho Russet potatoes tossed in white truffle oil and Parmigiano Reggiano.',
-            imageUrl: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?auto=format&fit=crop&w=1000&q=85',
+            imageUrl: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=1000&q=85',
             galleryImages: [],
             ingredients: ['Potatoes', 'Truffle Oil'],
             allergens: ['Dairy'],
