@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingBag, User, Search, Menu as MenuIcon, X } from 'lucide-react';
+import { ShoppingBag, User, Search, Menu as MenuIcon, X, ChevronRight } from 'lucide-react';
 import { useCartStore } from '../../stores/useCartStore';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { cn } from '../../lib/utils';
@@ -28,6 +28,18 @@ export const Navbar: React.FC = () => {
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [location.pathname]);
+
+  // Lock body scroll when mobile drawer is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   const navLinks = [
     { label: 'Home', href: '/' },
@@ -133,10 +145,10 @@ export const Navbar: React.FC = () => {
             Order Now
           </Link>
 
-          {/* Mobile menu button */}
+          {/* Mobile menu button (only visible on mobile/tablet below lg breakpoint) */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden touch-target p-2 text-[#171717] hover:bg-[#F5F0E6] transition-colors cursor-pointer"
+            className="flex lg:hidden items-center justify-center min-w-[44px] min-h-[44px] p-2 text-[#171717] hover:bg-[#F5F0E6] transition-colors cursor-pointer"
             aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
@@ -144,36 +156,104 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown with smooth height/opacity animation */}
+      {/* Mobile Right Drawer Navigation */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.22, ease: 'easeOut' }}
-            className="lg:hidden bg-[#FAF8F3] border-b-4 border-[#171717] px-4 pt-3 pb-6 max-h-[calc(100dvh-5rem)] overflow-y-auto pb-safe space-y-4 shadow-xl"
-          >
-            <nav className="flex flex-col space-y-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  className="font-display font-extrabold text-xl uppercase tracking-wider text-[#171717] hover:text-[#A82D24] py-3 border-b border-[#E5DFD3] min-h-[44px] flex items-center transition-colors"
-                >
-                  {link.label}
+          <div className="fixed inset-0 z-50 lg:hidden overflow-hidden flex justify-end">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.65 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22, ease: 'easeOut' }}
+              className="fixed inset-0 bg-[#171717]"
+              onClick={() => setMobileMenuOpen(false)}
+              aria-hidden="true"
+            />
+
+            {/* Slide-out Drawer from RIGHT */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 28, stiffness: 290 }}
+              className="relative z-10 w-[85vw] max-w-xs sm:max-w-sm h-[100dvh] bg-[#FAF8F3] border-l-4 border-[#171717] flex flex-col justify-between shadow-2xl"
+            >
+              {/* Drawer Top / Header */}
+              <div className="px-5 py-4 bg-[#F5F0E6] border-b-2 border-[#171717] flex items-center justify-between">
+                <Link to="/" onClick={() => setMobileMenuOpen(false)}>
+                  <BrandLogo variant="navbar" />
                 </Link>
-              ))}
-            </nav>
-            <div className="pt-2">
-              <Link
-                to="/menu"
-                className="w-full flex items-center justify-center bg-[#A82D24] hover:bg-[#8C231B] text-white py-3.5 font-display font-black text-lg uppercase tracking-wider border border-[#A82D24] min-h-[44px] transition-colors"
-              >
-                Order Online Now
-              </Link>
-            </div>
-          </motion.div>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="touch-target p-2 text-[#171717] hover:bg-[#A82D24] hover:text-white transition-colors cursor-pointer rounded-[2px]"
+                  aria-label="Close navigation menu"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Navigation Links list */}
+              <div className="flex-1 overflow-y-auto px-4 py-4 space-y-1">
+                <p className="text-[11px] font-mono uppercase tracking-widest text-[#737373] px-3 py-1 font-semibold">
+                  Navigation
+                </p>
+                <nav className="flex flex-col space-y-1">
+                  {navLinks.map((link) => {
+                    const isActive = location.pathname === link.href;
+                    return (
+                      <Link
+                        key={link.href}
+                        to={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={cn(
+                          'flex items-center justify-between px-3 py-3 font-display font-black text-lg uppercase tracking-wider transition-colors min-h-[48px] border-b border-[#E5DFD3]/60',
+                          isActive
+                            ? 'text-[#A82D24] bg-[#F5F0E6] border-l-4 border-l-[#A82D24]'
+                            : 'text-[#171717] hover:text-[#A82D24] hover:bg-[#F5F0E6]/50'
+                        )}
+                      >
+                        <span>{link.label}</span>
+                        <ChevronRight
+                          className={cn(
+                            'w-4 h-4 transition-transform',
+                            isActive ? 'text-[#A82D24] translate-x-1' : 'text-[#737373]'
+                          )}
+                        />
+                      </Link>
+                    );
+                  })}
+                </nav>
+
+                {/* Account / Auth quick access */}
+                <div className="pt-4 mt-2 border-t border-[#E5DFD3]">
+                  <Link
+                    to={isAuthenticated ? '/account' : '/login'}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-3 px-3 py-2.5 text-sm font-display font-bold uppercase tracking-wider text-[#525252] hover:text-[#A82D24] transition-colors"
+                  >
+                    <User className="w-4 h-4 text-[#A82D24]" />
+                    <span>{isAuthenticated ? 'My Account / Orders' : 'Sign In / Register'}</span>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Drawer Bottom Actions */}
+              <div className="p-4 bg-[#F5F0E6] border-t-2 border-[#171717] space-y-2">
+                <Link
+                  to="/menu"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full flex items-center justify-center gap-2 bg-[#A82D24] hover:bg-[#8C231B] text-white py-3.5 px-4 font-display font-black text-base uppercase tracking-wider border border-[#A82D24] shadow-sm transition-colors min-h-[48px]"
+                >
+                  <ShoppingBag className="w-5 h-5" />
+                  <span>Order Online Now</span>
+                </Link>
+                <p className="text-center text-[10px] font-mono uppercase text-[#737373] tracking-wider pt-1">
+                  Smash Burgers &bull; Handcrafted Daily
+                </p>
+              </div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </header>
